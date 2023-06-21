@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+      
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  # test:
+  #   build: 
+  #     context: ./Test
+  #     dockerfile: dockerfile
+  #   ports:
+  #     - 3700:3700
+  #   restart: on-failure
+    
