@@ -23,7 +23,7 @@ endpoints.testConnectionMariaDB = async(req, res) => {
 
 endpoints.testConnectionMongoDB = async(req, res) => {
     try {
-        await mongodb.connect('mongodb://localhost:27017')
+        await mongodb.connect(process.env.MONGODB_URI)
         return res.json({
             msg: 'La conexión a la base de datos de MongoDB ha sido exitosa!'
         })

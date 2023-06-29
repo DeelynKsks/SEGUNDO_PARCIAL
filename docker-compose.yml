@@ -6,17 +6,32 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=AguasFormosa
       
   mongodb:
     image: mongo
     ports:
       - "27017:27017"
+    environment:
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_SERVER=AguasFormosa
+      - ME_CONFIG_BASICAUTH_USERNAME=AFuser
+      - ME_CONFIG_BASICAUTH_PASSWORD=AFpass
 
-  # test:
-  #   build: 
-  #     context: ./Test
-  #     dockerfile: dockerfile
-  #   ports:
-  #     - 3700:3700
-  #   restart: on-failure
-    
+  test:
+    build: 
+      context: ./Test
+      dockerfile: dockerfile
+    ports:
+      - 3700:3700
+    depends_on:
+      - mariadb
+      - mongodb
+    restart: on-failure
+    environment:
+      - DBHOST=mariadb
+      - DBPORT=3306
+      - DBUSER=root
+      - DBPASSWORD=mysecretpassword
+      - DBNAME=AguasDeFormosa
+      - MONGODB_URI=mongodb://mongodb:27017/AguasFormosa
